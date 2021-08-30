@@ -30,11 +30,14 @@ let questions = [
 let count = 0;
 let startBtn = $("#startQuiz");
 let timeEl = $("#timer");
+let paraEl = $("#directions");
 let questionNum = 0;
 //As question answered correctly count++;?
 
 startBtn.on('click', function(){
     count = 0;
+    startBtn.prop('disabled', true);
+    paraEl.hide();
     displayQuestions();
     startTimer();
 })
