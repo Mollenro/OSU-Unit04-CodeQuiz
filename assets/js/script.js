@@ -54,6 +54,7 @@ function startTimer() {
         timeEl.text("Time: " + timeLeft);
         if (timeLeft === 0){
             clearInterval(timer);
+            displayScore();
         } else if (count === 4) {
             clearInterval(timer);
         }    
@@ -76,7 +77,6 @@ function displayQuestions() {
     containerEl.append(ans3.text(questions[count].choices[2]));
     containerEl.append(ans4.text(questions[count].choices[3]));
 }
-console.log(questions[count].answer);
 
 let choice = "";
 let score = 0;
@@ -99,29 +99,14 @@ function checkAnswer(choice){
         if (count !== 4){
             displayQuestions();
         } else {
-            console.log(count);
-            //REMOVING LEFTOVER BUTTONS
-            ans1.remove();
-            ans2.remove();
-            ans3.remove();
-            ans4.remove();
-            //Displays final screen with score, txtBox, submit btn
-            titleEl.text("You scored " + score + " points!");
-            paraEl.show();
-            paraEl.text("Please Enter Your Initials:");
-            submitBtn.text("Submit");
-            containerEl.append(textBox);
-            containerEl.append(submitBtn);
-           // window.location.href = "highscores.html";
+            displayScore();
         }
-    //}
-    //if (choice === questions[4].answer) {
-     //   window.location.href = "highscores.html";
-    //}
 }
 submitBtn.on('click', function(){
     //send score and initials to local storage so it can populate on the highscores page
-    console.log("yup");
+    console.log(textBox.value);
+    setStorage();
+    window.location.href = "highscores.html";
 })
 ans1.on('click', function(){
     choice = ans1.text();
@@ -148,3 +133,22 @@ ans4.on('click', function(){
 //^places data on the highscores.html page
 
 //maybe make a separate .js file for highscores? it will have access to local files
+function displayScore() {
+    //REMOVING LEFTOVER BUTTONS
+    ans1.remove();
+    ans2.remove();
+    ans3.remove();
+    ans4.remove();
+    //Displays final screen with score, txtBox, submit btn
+    titleEl.text("You scored " + score + " points!");
+    paraEl.show();
+    paraEl.text("Please Enter Your Initials:");
+    submitBtn.text("Submit");
+    containerEl.append(textBox);
+    containerEl.append(submitBtn);    
+}
+
+function setStorage() {
+    localStorage.setItem("Score", score);
+    localStorage.setItem("Initials", textBox.val());
+}
