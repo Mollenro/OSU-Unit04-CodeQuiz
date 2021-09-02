@@ -30,6 +30,7 @@ let questions = [
 let count = 0;
 let startBtn = $("#startQuiz");
 let timeEl = $("#timer");
+let scoreEl = $("#score");
 let paraEl = $("#directions");
 let questionNum = 0;
 //As question answered correctly count++;?
@@ -64,9 +65,13 @@ function startTimer() {
 let titleEl = $("#title");
 let containerEl = $("#choiceContainer");
 let ans1 = $("<button>");
+ans1.attr("class", "btn btn-primary m-1");
 let ans2 = $("<button>");
+ans2.attr("class", "btn btn-primary m-1");
 let ans3 = $("<button>");
+ans3.attr("class", "btn btn-primary m-1");
 let ans4 = $("<button>");
+ans4.attr("class", "btn btn-primary m-1");
 
 function displayQuestions() {
     //Populating the web page with the questions and titles
@@ -82,6 +87,7 @@ let choice = "";
 let score = 0;
 let textBox = $("<input>");
 let submitBtn = $("<button>");
+submitBtn.attr("class", "btn btn-primary m-1");
 //textBox.setAttribute("type", "text");
 
 function checkAnswer(choice){
@@ -91,6 +97,7 @@ function checkAnswer(choice){
         if (choice === questions[count].answer){
             console.log("correct!");
             score += 5;
+            scoreEl.text("Score: " + score);
         } else {
             console.log("Wrong!");
             timeLeft -= 10;

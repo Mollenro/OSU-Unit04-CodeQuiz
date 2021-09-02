@@ -1,3 +1,5 @@
+let backBtn = $("#back");
+let clearBtn = $("#clear");
 let highscoreEl = $("#highscores");
 let listEl = $("<li>");
 let initials = ""
@@ -10,6 +12,17 @@ function getStorage() {
 
 getStorage();
 
-listEl.text(initials + " - " + score);
+if (initials !== null && score !== null){
+    listEl.text(initials + " - " + score);
+    highscoreEl.append(listEl);
+}
 
-highscoreEl.append(listEl);
+
+backBtn.on('click', function(){
+    window.location.href = "index.html";
+})
+
+clearBtn.on('click', function(){
+    listEl.remove();
+    localStorage.clear();  
+})
