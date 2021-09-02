@@ -38,6 +38,7 @@ startBtn.on('click', function(){
     count = 0;
     startBtn.prop('disabled', true);
     paraEl.hide();
+    startBtn.hide();
     displayQuestions();
     startTimer();
 })
@@ -53,8 +54,9 @@ function startTimer() {
         timeEl.text("Time: " + timeLeft);
         if (timeLeft === 0){
             clearInterval(timer);
-
-        } //else if all ?'s answered clearInt?
+        } else if (count === 4) {
+            clearInterval(timer);
+        }    
     }, 1000);
 }
 
@@ -77,18 +79,50 @@ function displayQuestions() {
 console.log(questions[count].answer);
 
 let choice = "";
+let score = 0;
+let textBox = $("<input>");
+let submitBtn = $("<button>");
+//textBox.setAttribute("type", "text");
+
 function checkAnswer(choice){
+
     //dock time if answer is wrong
-    if (choice === questions[count].answer){
-        console.log("correct!");
+    //while (count < 4){
+        if (choice === questions[count].answer){
+            console.log("correct!");
+            score += 5;
+        } else {
+            console.log("Wrong!");
+            timeLeft -= 10;
+        }
         count++;
-        displayQuestions();
-    } else {
-        timeLeft -= 10;
-    }
-
+        if (count !== 4){
+            displayQuestions();
+        } else {
+            console.log(count);
+            //REMOVING LEFTOVER BUTTONS
+            ans1.remove();
+            ans2.remove();
+            ans3.remove();
+            ans4.remove();
+            //Displays final screen with score, txtBox, submit btn
+            titleEl.text("You scored " + score + " points!");
+            paraEl.show();
+            paraEl.text("Please Enter Your Initials:");
+            submitBtn.text("Submit");
+            containerEl.append(textBox);
+            containerEl.append(submitBtn);
+           // window.location.href = "highscores.html";
+        }
+    //}
+    //if (choice === questions[4].answer) {
+     //   window.location.href = "highscores.html";
+    //}
 }
-
+submitBtn.on('click', function(){
+    //send score and initials to local storage so it can populate on the highscores page
+    console.log("yup");
+})
 ans1.on('click', function(){
     choice = ans1.text();
     checkAnswer(choice);
